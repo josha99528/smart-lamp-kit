@@ -16,14 +16,11 @@
 
 * **Dimensions:** 50 **mm** circular diameter.  
 * **Total Vertical Height (Critical):** The absolute maximum height of the fully assembled PCBA (including the 1.6mm PCB, top LEDs, and all bottom components) must **not exceed 10.0 mm**. This is strictly required so it physically drops into restrictive 3D printed housings designed around the Bambu Lab puck.
-* **Mechanical Fit:** Must include three mounting holes for exact alignment with standard housing pins/screws:
-  * One dead-center hole (~4.8mm diameter).
-  * Two outer holes (3.2mm diameter for standard M3 / BT3 clearance), placed exactly **28mm apart** across the center (i.e., each hole is 14mm from the center point on the X-axis).
 * **Layer Count:** 4 Layers.  
 * **Assembly Routing:** Double-sided PCBA.  
-  * **Top Layer:** Exclusively reserved for the 16x LED components to ensure unobstructed 360-degree light diffusion.  
+  * **Top Layer:** Reserved for the 16x LED components (arranged in a perimeter ring) and the ESP32-C6 module (placed centrally inside the ring).  
   * **Inner Layers:** Utilize for dedicated Ground (GND) and Power (5V/3.3V) planes to simplify routing and improve thermal dissipation.
-  * **Bottom Layer:** USB-C receptacle (bottom-mount preferred), MCU module, voltage regulator, level shifter, tactile button, and all passive components.  
+  * **Bottom Layer:** USB-C receptacle, voltage regulator, level shifter, tactile button, and all passive components.  
 * **Material:** FR-4 (TG130 or TG150).  
 * **Thickness:** 1.6 mm.  
 * **Copper Weight:** 1 oz.  
@@ -34,7 +31,7 @@
 ## **3. Hardware & Routing Guidelines**
 
 * **Component Placement & Clearances (Critical):**
-  * **ESP32-C6 Placement:** The module is large (25.5mm long). It MUST be rotated horizontally and placed entirely in the "Top" hemisphere of the board (above the center mounting hole, Y > 0). Placing it vertically or in the bottom hemisphere will geometrically collide with either the center mounting hole or the deep bottom-edge USB-C Keyhole cutout.
+  * **ESP32-C6 Placement:** The module is large (25.5mm long). It MUST be rotated horizontally and placed on the Top Layer, entirely within the empty circular space completely surrounded by the 16 LEDs. Placing it on the bottom layer will collide with the massive deep bottom-edge USB-C Keyhole cutout.
 * **LED Placement (Critical):** The 16x SK6812 LEDs must be placed on the Top Layer, arranged in a perfect ring/circle along the outer perimeter of the board. They must be evenly spaced at exactly 22.5-degree intervals.
 * **Power Distribution & Safety:** 
   * Route the 5V VBUS net directly from the USB-C input to the LED array. Step down 5V to 3.3V via the LDO regulator exclusively for the ESP32-C6 module and logic circuitry.

@@ -5,11 +5,7 @@
 pcb_diameter = 50;
 pcb_thickness = 1.6;
 
-// --- Mounting Holes ---
-// 3 holes: one dead center, and two on the sides spaced 28mm apart
-outer_hole_diameter = 3.2; // M3 clearance for BT3 screws
-center_hole_diameter = 4.8;
-hole_distance_from_center = 14; // 28mm apart = 14mm radius
+// (Mounting holes removed to free up internal board space)
 
 // --- Stepped Keyhole Cutout Dimensions ---
 // The cutout has 3 stages: Receptacle mount, Strain Relief void, and Wire exit slot.
@@ -29,12 +25,12 @@ cutout_slot_width = 5;
 cutout_slot_depth = 5; 
 cutout_slot_y = -26; // Reach past the outer edge
 
-// --- ESP32-C6-WROOM-1 Module (Bottom Layer) ---
-// Module must be rotated horizontally to fit in the top hemisphere
+// --- ESP32-C6-WROOM-1 Module (Top Layer) ---
+// Module must be rotated horizontally to fit inside the LED ring geometry
 esp_width = 25.5; // (Swapped length and width for horizontal orientation)
 esp_length = 18;
 esp_height = 3.2; // Module thickness + solder clearance
-esp_offset_y = 10; // Moved into the positive Y hemisphere, safely above the center mounting hole
+esp_offset_y = 6; // Shifted slightly positive Y to perfectly clear the deep USB port underneath
 
 // --- Low-Profile Bulk Capacitor (Bottom Layer) ---
 cap_width = 7.3;
@@ -72,17 +68,7 @@ union() {
         color("darkgreen")
         cylinder(h=pcb_thickness, d=pcb_diameter, $fn=100);
         
-        // Center Mounting Hole
-        translate([0, 0, -1])
-        cylinder(h=pcb_thickness+2, d=center_hole_diameter, $fn=50);
-
-        // Mounting Hole 2 (Left)
-        translate([-hole_distance_from_center, 0, -1])
-        cylinder(h=pcb_thickness+2, d=outer_hole_diameter, $fn=50);
-        
-        // Mounting Hole 3 (Right)
-        translate([hole_distance_from_center, 0, -1])
-        cylinder(h=pcb_thickness+2, d=outer_hole_diameter, $fn=50);
+        // (Mounting holes removed)
         
         // Stage 1: Receptacle Belly Cutout
         translate([-cutout_rec_width/2, cutout_rec_y, -1])
@@ -97,16 +83,15 @@ union() {
         cube([cutout_slot_width, cutout_slot_depth, pcb_thickness+2]);
     }
     
-    // 2a. ESP32-C6 Module (Placed on BOTTOM, Top Hemisphere)
+    // 2a. ESP32-C6 Module (Placed on TOP, Inside LED Ring)
     color("silver")
     difference() {
-        translate([-esp_width/2, esp_offset_y - esp_length/2, -esp_height])
+        translate([-esp_width/2, esp_offset_y - esp_length/2, pcb_thickness])
         cube([esp_width, esp_length, esp_height]);
         
-        // Engrave "ESP32" into the bottom face of the module
-        translate([0, esp_offset_y, -esp_height - 0.1])
+        // Engrave "ESP32" into the top face of the module
+        translate([0, esp_offset_y, pcb_thickness + esp_height - 0.4])
         linear_extrude(1)
-        mirror([1,0,0])
         text("ESP32", size=4, halign="center", valign="center");
     }
     
