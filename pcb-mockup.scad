@@ -74,8 +74,10 @@ union() {
     cube([esp_width, esp_length, esp_height]);
     
     // 3. USB-C Port (Mid-Mounted inside the cutout)
-    color("dimgray")
-    translate([-usb_width/2, cutout_inner_y + 2, usb_z_offset])
+    // Using a brighter distinct color so it stands out against the PCB
+    color("LightGray")
+    // Positioned at the very edge of the inner cutout, straddling the Z-axis
+    translate([-usb_width/2, cutout_inner_y - usb_length + 2, usb_z_offset])
     cube([usb_width, usb_length, usb_height]);
     
     // 4. The 16x SK6812 LEDs (Placed in a continuous ring)
