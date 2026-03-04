@@ -81,6 +81,28 @@ union() {
         // Keyhole Cutout - Outer Narrow Slot (For Wire)
         translate([-cutout_slot_width/2, cutout_slot_y, -1])
         cube([cutout_slot_width, cutout_slot_depth, pcb_thickness+2]);
+        
+        // --- 3D Text Labels (Engraved 0.6mm deep into the board) ---
+        // Top Surface Labels
+        translate([0, 10, pcb_thickness - 0.6])
+        linear_extrude(1)
+        text("TOP (LEDs)", size=4, halign="center", font="Arial:style=Bold");
+        
+        // Bottom Surface Labels (Mirrored so they read correctly when flipped)
+        translate([0, 0, -0.1])
+        linear_extrude(1)
+        mirror([1,0,0]) // Mirror text for the bottom layer
+        text("BOTTOM (COMPONENTS)", size=3, halign="center", font="Arial:style=Bold");
+        
+        translate([0, -15, -0.1])
+        linear_extrude(1)
+        mirror([1,0,0])
+        text("USB", size=3, halign="center");
+        
+        translate([0, 15, -0.1])
+        linear_extrude(1)
+        mirror([1,0,0])
+        text("ESP32", size=3, halign="center");
     }
     
     // 2a. ESP32-C6 Module (Placed on BOTTOM, Top Hemisphere)
