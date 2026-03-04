@@ -44,9 +44,13 @@
   * Ensure the PCB layout includes a small copper polygon under the 3.3V LDO to act as a heatsink.
   * Include an NTC Thermistor connected to an ESP32 ADC pin to monitor board temperature.
 * **USB-C Implementation & Protection:** 
-  * **Mounting Style (Critical):** Use an **Inward-Recessed Mid-Mount (Cutout)** USB-C receptacle.
-  * **The "Keyhole" Cutout Geometry:** The PCB edge must feature a 'T-shaped' or 'Keyhole' edge-cut. The inner part of the cutout must be wide enough (~14mm) and deep enough to completely house the rigid plastic strain relief head of a male USB-C cable. The outer edge of the cutout (where it meets the 50mm perimeter) must narrow down to a **~4.5mm to 5mm slot**. 
-  * **LED Ring Preservation (Critical):** Because the perimeter slot is only 5mm wide, the flexible cord can exit the board, but the 16 LEDs can still be placed in a continuous, evenly-spaced ring without the cutout destroying any LED positions. The user will drop the cable head into the cutout from the Z-axis before placing the board in its enclosure.
+  * **Component Selection:** Use the **TE Connectivity 2129691-2** (or equivalent 24-position Hybrid Mid-Mount Receptacle) to achieve the absolute minimum vertical height of ~2.2mm.
+  * **Mounting Style (Critical):** The receptacle must be an **Inward-Recessed Mid-Mount**.
+  * **The Multi-Stage "Stepped Keyhole" Cutout Geometry:** The PCB edge must feature a complex stepped cutout. Do NOT use a single massive square void, or the receptacle will fall through.
+    1. **Inner Void (Strain Relief Chamber):** Deepest into the board, a void wide enough (~14mm) and deep enough to completely bury the rigid plastic strain relief head of a male USB-C cable.
+    2. **Receptacle Bridge (Mounting Support):** Immediately outward from the inner void, the fiberglass must "pinch" inwards, leaving enough solid PCB on the left and right sides to mechanically support and solder the mid-mount receptacle's SMD mounting wings and grounding tabs, while following the exact ~12.35mm internal hole mandated by the TE footprint. 
+    3. **Outer Slot (Wire Exit):** At the extreme outer perimeter of the 50mm board, the cutout must narrow down to a **~4.5mm to 5mm slot**. 
+  * **LED Ring Preservation (Critical):** Because the very outer perimeter slot is only 5mm wide, the flexible cord can exit the board without interrupting the ring of 16 LEDs. The user will drop the cable head into the inner void from the Z-axis, plug it into the receptacle bridge, and lay the wire through the narrow exit slot before placing the board in its enclosure.
   * Route USB D+ and D- to the ESP32-C6 hardware USB/JTAG pins for native USB flashing. 
   * Include two 5.1kΩ pull-down resistors on CC1 and CC2.
   * Add a TVS diode array (e.g., SRV05-4) on the USB-C VBUS, D+, and D- lines for ESD protection.

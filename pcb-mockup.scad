@@ -11,13 +11,23 @@ outer_hole_diameter = 3.2; // M3 clearance for BT3 screws
 center_hole_diameter = 4.8;
 hole_distance_from_center = 14; // 28mm apart = 14mm radius
 
-// --- Keyhole Cutout Dimensions ---
-cutout_inner_width = 14; // Wide enough for USB-C plastic strain relief
-cutout_inner_depth = 14; // Deep enough for the plastic head
-cutout_inner_y = -22.5; // Placed inward from the edge
-cutout_slot_width = 5; // Narrow slot for the wire to pass through
-cutout_slot_depth = 10; // Connects the inner hole to the perimeter
-cutout_slot_y = -25; // Reaches the outer edge
+// --- Stepped Keyhole Cutout Dimensions ---
+// The cutout has 3 stages: Receptacle mount, Strain Relief void, and Wire exit slot.
+
+// Stage 1: Receptacle Cutout (Where the mid-mount drops in)
+cutout_rec_width = 12.35; // TE 2129691-2 belly width
+cutout_rec_depth = 5;
+cutout_rec_y = -14; // Placed deep into the board
+
+// Stage 2: Strain Relief Void (For the thick plastic cable head)
+cutout_void_width = 14; 
+cutout_void_depth = 8;
+cutout_void_y = -21; // From y=-13 to y=-21
+
+// Stage 3: Wire Exit Slot (Passes exactly through the LED ring)
+cutout_slot_width = 5; 
+cutout_slot_depth = 5; 
+cutout_slot_y = -26; // Reach past the outer edge
 
 // --- ESP32-C6-WROOM-1 Module (Bottom Layer) ---
 // Module must be rotated horizontally to fit in the top hemisphere
@@ -41,9 +51,9 @@ btn_offset_y = -3;
 btn_offset_x = -10; // Placed firmly on the bottom left quadrant 
 
 // --- USB-C Receptacle (Mid-Mount) ---
-usb_width = 9;
-usb_length = 7.5; 
-usb_height = 3.2;
+usb_width = 12.35;
+usb_length = 9; 
+usb_height = 2.225; // TE 2129691-2 height
 // Mid-mount means it straddles the Z-axis center of the PCB
 usb_z_offset = (pcb_thickness / 2) - (usb_height / 2); 
 
@@ -74,11 +84,15 @@ union() {
         translate([hole_distance_from_center, 0, -1])
         cylinder(h=pcb_thickness+2, d=outer_hole_diameter, $fn=50);
         
-        // Keyhole Cutout - Inner Wide Hole (For Strain Relief)
-        translate([-cutout_inner_width/2, cutout_inner_y, -1])
-        cube([cutout_inner_width, cutout_inner_depth, pcb_thickness+2]);
+        // Stage 1: Receptacle Belly Cutout
+        translate([-cutout_rec_width/2, cutout_rec_y, -1])
+        cube([cutout_rec_width, cutout_rec_depth, pcb_thickness+2]);
         
-        // Keyhole Cutout - Outer Narrow Slot (For Wire)
+        // Stage 2: Strain Relief Void
+        translate([-cutout_void_width/2, cutout_void_y, -1])
+        cube([cutout_void_width, cutout_void_depth, pcb_thickness+2]);
+        
+        // Stage 3: Wire Exit Slot
         translate([-cutout_slot_width/2, cutout_slot_y, -1])
         cube([cutout_slot_width, cutout_slot_depth, pcb_thickness+2]);
     }
@@ -122,18 +136,17 @@ union() {
         text("BTN", size=1.5, halign="center", valign="center");
     }
     
-    // 3. USB-C Port (Mid-Mounted inside the cutout)
+    // 3. USB-C Port (TE 2129691-2 Mid-Mounted inside the cutout)
     // Using a brighter distinct color so it stands out against the PCB
     color("LightGray")
     difference() {
-        // Positioned at the very edge of the inner cutout, straddling the Z-axis
-        translate([-usb_width/2, cutout_inner_y - usb_length + 2, usb_z_offset])
+        // Positioned inside the Stage 1 receptacle cutout
+        translate([-usb_width/2, cutout_rec_y - 0.5, usb_z_offset])
         cube([usb_width, usb_length, usb_height]);
         
-        // Engrave "USB" into the bottom face of the receptacle
-        translate([0, cutout_inner_y - (usb_length/2) + 2, usb_z_offset - 0.1])
+        // Engrave "USB" into the top face of the receptacle
+        translate([0, cutout_rec_y + (usb_length/2) - 0.5, usb_z_offset + usb_height + 0.1])
         linear_extrude(1)
-        mirror([1,0,0])
         text("USB", size=2.5, halign="center", valign="center");
     }
     
