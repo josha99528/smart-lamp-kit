@@ -16,9 +16,9 @@
 * **Internal Wires:** The cable requires 4 active internal wires passing through: `VBUS` (5V), `GND`, `D+`, and `D-`. (A `CC` wire may also be included depending on the OEM).
 * **Pass-Through:** `VBUS`, `GND`, and `D-` wires pass straight through the switch housing directly from one end to the other without interruption.
 * **Button Implementation (Simplest & Cheapest Method):**
-  * Inside the switch housing, a simple tactile momentary push-button is bridging the `D+` wire and the `GND` wire.
+  * Inside the switch housing, a simple tactile momentary push-button is bridging the `D+` wire and the `GND` wire. **(Note: This must strictly be a "non-latching" push-button that just clicks, exactly like the stock Bambu Lab lamp button. It does not physically remember its state. The ESP32 firmware handles all the "on vs off" memory so that it stays perfectly in sync with the smart home app.)**
   * **Safety Resistor:** A small ~330Ω to 470Ω resistor MUST be placed in series between the `GND` wire and the push-button. 
-  * **How it works:** When the button is pressed, it pulls the `D+` line to Ground (LOW). When unpressed, the line floats (and will be pulled HIGH by the ESP32's internal resistor). 
+  * **How it works:** When the button is pressed, it temporarily pulls the `D+` line to Ground (LOW). When released, the line floats (and will be pulled HIGH by the ESP32's internal resistor). 
   * **Why the resistor?** If a user mistakenly uses this custom cord to connect their cell phone to their laptop, pressing the button could short the active 3.3V USB data line to ground. The series resistor safely limits this current, protecting the PC's USB port from short-circuit damage while still pulling the voltage low enough for the ESP32 to detect it as a button press.
 
 ## **4. Main PCB Firmware Integration**
