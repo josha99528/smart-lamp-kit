@@ -55,9 +55,12 @@
   * Place a 3.3V-to-5V level shifter (e.g., 74AHCT125) on the data line between the ESP32-C6 GPIO output and the data-in pin of the first SK6812 LED.
   * Add a 330Ω to 470Ω series resistor between the level shifter output and the data input of LED1 to damp signal ringing.
 * **Antenna Clearance:** Ensure there are no copper pours, traces, or components on any layer directly beneath or adjacent to the PCB antenna trace of the ESP32-C6-WROOM-1 module.  
-* **User Interface & Boot Strapping:** 
-  * Connect the single tactile button between a standard GPIO pin and Ground. 
-  * **Critical:** Do not hardwire this button to strapping pins (like GPIO 8 or GPIO 9) in a way that holding the button during power-on would prevent the ESP32 from booting normally or accidentally force it into download mode.
+* **User Interface & Development Features:** 
+  * **User Button:** Connect one tactile button between a standard GPIO pin and Ground for user input (e.g., toggling the lamp). Do not hardwire this to strapping pins.
+  * **Boot & Reset Buttons:** Include two tactile buttons specifically for development: one connected to the `EN` pin (Reset) and one connected to `GPIO9` (Boot). These are essential for manual firmware flashing. 
+  * **Status LEDs:** Include two 0603 or 0402 SMD LEDs on the bottom layer:
+    * **Power LED:** Connected to the 3.3V rail (with a suitable current-limiting resistor) to indicate system power.
+    * **User LED:** Connected to a free GPIO pin (with a suitable resistor) for user-programmable status indication.
 
 ## **4. Bill of Materials (BOM)**
 
@@ -70,7 +73,11 @@
 | **U3** | **74AHCT125** | 1 | 3.3V to 5V Logic Level Shifter (Single gate variant e.g., SN74AHCT1G125). |
 | **D1** | **SRV05-4** (or similar) | 1 | TVS Diode Array for ESD protection on USB data/power lines. |
 | **F1** | **PTC Resettable Fuse (2A-3A)** | 1 | Inline fuse on 5V VBUS for short circuit protection. |
-| **SW1** | **Tactile Push Button** | 1 | SMD push button for user control (Bottom Layer). **Must be Low-Profile (max 1.5mm height).** (Reason: Standard 6mm buttons add unacceptable Z-height and are trapped/unusable once sealed inside the plastic puck housing). |
+| **SW1** | **Tactile Push Button** | 1 | SMD push button for user control (Bottom Layer). **Must be Low-Profile (max 1.5mm height).** |
+| **SW2, SW3** | **Tactile Push Button** | 2 | Boot and Reset buttons for development. Must also be low profile. |
+| **DL1** | **Red/Green SMD LED (0603)** | 1 | System Power indicator LED. |
+| **DL2** | **Blue SMD LED (0603)** | 1 | User programmable status LED. |
+| **R5, R6** | **Current Limiting Resistors** | 2 | Resistors for DL1 and DL2. |
 | **TH1** | **NTC Thermistor** (e.g., 10kΩ) | 1 | Temperature monitoring sensor. |
 | **C1, C2** | **10µF Ceramic Capacitor** | 2 | Decoupling for 3.3V LDO input and output (0805 or 0603). |
 | **CBLK1** | **470µF or 1000µF Capacitor** | 1 | Bulk capacitor for 5V LED rail. **Must be a Low-Profile Tantalum Polymer SMD (max 3.0mm height).** (Reason: Standard tall electrolytic cylinder capacitors are 10mm+ tall and will completely violate the strict 10mm housing Z-limit). |
