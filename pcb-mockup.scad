@@ -11,28 +11,37 @@ outer_hole_diameter = 3.2; // M3 clearance for BT3 screws
 center_hole_diameter = 4.8;
 hole_distance_from_center = 14; // 28mm apart = 14mm radius
 
+// --- Keyhole Cutout Dimensions ---
+cutout_inner_width = 14; // Wide enough for USB-C plastic strain relief
+cutout_inner_depth = 14; // Deep enough for the plastic head
+cutout_inner_y = -22.5; // Placed inward from the edge
+cutout_slot_width = 5; // Narrow slot for the wire to pass through
+cutout_slot_depth = 10; // Connects the inner hole to the perimeter
+cutout_slot_y = -25; // Reaches the outer edge
+
 // --- ESP32-C6-WROOM-1 Module (Bottom Layer) ---
 esp_width = 18;
 esp_length = 25.5;
-esp_height = 3.2; // Module thickness + solder clearance
-esp_offset_y = -5; // Move slightly down to clear antenna keep-out at top
+esp_height = 3.2;
+esp_offset_y = -3; 
 
-// --- USB-C Receptacle (Bottom Layer, Edge Mount) ---
+// --- USB-C Receptacle (Mid-Mount) ---
 usb_width = 9;
-usb_length = 7.5; // How far it protrudes into board
+usb_length = 7.5; 
 usb_height = 3.2;
-usb_overhang = 1.5; // How much it sticks out past the 50mm edge
+// Mid-mount means it straddles the Z-axis center of the PCB
+usb_z_offset = (pcb_thickness / 2) - (usb_height / 2); 
 
 // --- SK6812 5050 LEDs (Top Layer) ---
 led_count = 16;
-led_size = 5.0; // 5050 package is 5x5mm
+led_size = 5.0; 
 led_height = 1.6;
 led_radius = 21; // Distance from center to LED center
 
 // --- Component Assembly ---
 union() {
     
-    // 1. The Main FR4 PCB Body
+    // 1. The Main FR4 PCB Body with Holes and Keyhole Cutout
     difference() {
         // PCB Base
         color("darkgreen")
@@ -49,35 +58,39 @@ union() {
         // Mounting Hole 3 (Right)
         translate([hole_distance_from_center, 0, -1])
         cylinder(h=pcb_thickness+2, d=outer_hole_diameter, $fn=50);
+        
+        // Keyhole Cutout - Inner Wide Hole (For Strain Relief)
+        translate([-cutout_inner_width/2, cutout_inner_y, -1])
+        cube([cutout_inner_width, cutout_inner_depth, pcb_thickness+2]);
+        
+        // Keyhole Cutout - Outer Narrow Slot (For Wire)
+        translate([-cutout_slot_width/2, cutout_slot_y, -1])
+        cube([cutout_slot_width, cutout_slot_depth, pcb_thickness+2]);
     }
     
-    // 2. ESP32-C6 Module (Placed on BOTTOM, colored metallic grey)
-    // Note: Z is negative because it's on the bottom layer
+    // 2. ESP32-C6 Module (Placed on BOTTOM)
     color("silver")
     translate([-esp_width/2, esp_offset_y - esp_length/2, -esp_height])
     cube([esp_width, esp_length, esp_height]);
     
-    // 3. USB-C Port (Placed on BOTTOM edge, colored dark grey)
-    // Positioned at the very bottom edge (South pole of the circle)
+    // 3. USB-C Port (Mid-Mounted inside the cutout)
     color("dimgray")
-    translate([-usb_width/2, -(pcb_diameter/2) - usb_overhang, -usb_height])
-    cube([usb_width, usb_length + usb_overhang, usb_height]);
+    translate([-usb_width/2, cutout_inner_y + 2, usb_z_offset])
+    cube([usb_width, usb_length, usb_height]);
     
-    // 4. The 16x SK6812 LEDs (Placed on TOP layer, arranged in a ring)
+    // 4. The 16x SK6812 LEDs (Placed in a continuous ring)
+    // The keyhole slot is only 5mm wide, which fits perfectly between the LEDs!
     color("white")
     for (i = [0 : led_count - 1]) {
         // Calculate angle for each LED (360 / 16 = 22.5 degrees)
-        angle = i * (360 / led_count);
+        // Offset by 11.25 degrees so the slot perfectly splits the gap between two LEDs at the bottom
+        angle = (i * (360 / led_count)) + 11.25;
         
-        // Calculate X and Y position based on radius and angle
         x_pos = led_radius * cos(angle);
         y_pos = led_radius * sin(angle);
         
-        // Place the LED block on top of the PCB
         translate([x_pos, y_pos, pcb_thickness])
-        // Rotate the square LED so it sits tangent to the ring
         rotate([0, 0, angle])
-        // Shift by -led_size/2 so the center of the cube is on the radius line
         translate([-led_size/2, -led_size/2, 0])
         cube([led_size, led_size, led_height]);
     }
