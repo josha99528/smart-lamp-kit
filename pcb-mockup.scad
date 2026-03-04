@@ -81,51 +81,61 @@ union() {
         // Keyhole Cutout - Outer Narrow Slot (For Wire)
         translate([-cutout_slot_width/2, cutout_slot_y, -1])
         cube([cutout_slot_width, cutout_slot_depth, pcb_thickness+2]);
-        
-        // --- 3D Text Labels (Engraved 0.6mm deep into the board) ---
-        // Top Surface Labels
-        translate([0, 10, pcb_thickness - 0.6])
-        linear_extrude(1)
-        text("TOP (LEDs)", size=4, halign="center", font="Arial:style=Bold");
-        
-        // Bottom Surface Labels (Mirrored so they read correctly when flipped)
-        translate([0, 0, -0.1])
-        linear_extrude(1)
-        mirror([1,0,0]) // Mirror text for the bottom layer
-        text("BOTTOM (COMPONENTS)", size=3, halign="center", font="Arial:style=Bold");
-        
-        translate([0, -15, -0.1])
-        linear_extrude(1)
-        mirror([1,0,0])
-        text("USB", size=3, halign="center");
-        
-        translate([0, 15, -0.1])
-        linear_extrude(1)
-        mirror([1,0,0])
-        text("ESP32", size=3, halign="center");
     }
     
     // 2a. ESP32-C6 Module (Placed on BOTTOM, Top Hemisphere)
     color("silver")
-    translate([-esp_width/2, esp_offset_y - esp_length/2, -esp_height])
-    cube([esp_width, esp_length, esp_height]);
+    difference() {
+        translate([-esp_width/2, esp_offset_y - esp_length/2, -esp_height])
+        cube([esp_width, esp_length, esp_height]);
+        
+        // Engrave "ESP32" into the bottom face of the module
+        translate([0, esp_offset_y, -esp_height - 0.1])
+        linear_extrude(1)
+        mirror([1,0,0])
+        text("ESP32", size=4, halign="center", valign="center");
+    }
     
     // 2b. Low-Profile Bulk Capacitor (Bottom)
     color("orange")
-    translate([cap_offset_x - cap_width/2, cap_offset_y - cap_length/2, -cap_height])
-    cube([cap_width, cap_length, cap_height]);
+    difference() {
+        translate([cap_offset_x - cap_width/2, cap_offset_y - cap_length/2, -cap_height])
+        cube([cap_width, cap_length, cap_height]);
+        
+        // Engrave "CAP" into the bottom face of the capacitor
+        translate([cap_offset_x, cap_offset_y, -cap_height - 0.1])
+        linear_extrude(1)
+        mirror([1,0,0])
+        text("CAP", size=2.5, halign="center", valign="center");
+    }
     
     // 2c. Low-Profile Tactile Button (Bottom)
     color("black")
-    translate([btn_offset_x - btn_width/2, btn_offset_y - btn_length/2, -btn_height])
-    cube([btn_width, btn_length, btn_height]);
+    difference() {
+        translate([btn_offset_x - btn_width/2, btn_offset_y - btn_length/2, -btn_height])
+        cube([btn_width, btn_length, btn_height]);
+        
+        // Engrave "BTN" into the bottom face of the button
+        translate([btn_offset_x, btn_offset_y, -btn_height - 0.1])
+        linear_extrude(1)
+        mirror([1,0,0])
+        text("BTN", size=1.5, halign="center", valign="center");
+    }
     
     // 3. USB-C Port (Mid-Mounted inside the cutout)
     // Using a brighter distinct color so it stands out against the PCB
     color("LightGray")
-    // Positioned at the very edge of the inner cutout, straddling the Z-axis
-    translate([-usb_width/2, cutout_inner_y - usb_length + 2, usb_z_offset])
-    cube([usb_width, usb_length, usb_height]);
+    difference() {
+        // Positioned at the very edge of the inner cutout, straddling the Z-axis
+        translate([-usb_width/2, cutout_inner_y - usb_length + 2, usb_z_offset])
+        cube([usb_width, usb_length, usb_height]);
+        
+        // Engrave "USB" into the bottom face of the receptacle
+        translate([0, cutout_inner_y - (usb_length/2) + 2, usb_z_offset - 0.1])
+        linear_extrude(1)
+        mirror([1,0,0])
+        text("USB", size=2.5, halign="center", valign="center");
+    }
     
     // 4. The 16x SK6812 LEDs (Placed in a continuous ring)
     // The keyhole slot is only 5mm wide, which fits perfectly between the LEDs!
@@ -138,9 +148,18 @@ union() {
         x_pos = led_radius * cos(angle);
         y_pos = led_radius * sin(angle);
         
-        translate([x_pos, y_pos, pcb_thickness])
-        rotate([0, 0, angle])
-        translate([-led_size/2, -led_size/2, 0])
-        cube([led_size, led_size, led_height]);
+        // Place the LED block and engrave "LED" on top of it
+        difference() {
+            translate([x_pos, y_pos, pcb_thickness])
+            rotate([0, 0, angle])
+            translate([-led_size/2, -led_size/2, 0])
+            cube([led_size, led_size, led_height]);
+            
+            // Engrave text on top of the LED
+            translate([x_pos, y_pos, pcb_thickness + led_height - 0.4])
+            rotate([0, 0, angle])
+            linear_extrude(1)
+            text("LED", size=1.5, halign="center", valign="center");
+        }
     }
 }
