@@ -15,6 +15,7 @@
 ## **2. Printed Circuit Board (PCB) Specifications**
 
 * **Dimensions:** 50 **mm** circular diameter.  
+* **Total Vertical Height (Critical):** The absolute maximum height of the fully assembled PCBA (including the 1.6mm PCB, top LEDs, and all bottom components) must **not exceed 10.0 mm**. This is strictly required so it physically drops into restrictive 3D printed housings designed around the Bambu Lab puck.
 * **Mechanical Fit:** Must include three mounting holes for exact alignment with standard housing pins/screws:
   * One dead-center hole (~4.8mm diameter).
   * Two outer holes (3.2mm diameter for standard M3 / BT3 clearance), placed exactly **28mm apart** across the center (i.e., each hole is 14mm from the center point on the X-axis).
@@ -32,6 +33,8 @@
 
 ## **3. Hardware & Routing Guidelines**
 
+* **Component Placement & Clearances (Critical):**
+  * **ESP32-C6 Placement:** The module is large (25.5mm long). It MUST be rotated horizontally and placed entirely in the "Top" hemisphere of the board (above the center mounting hole, Y > 0). Placing it vertically or in the bottom hemisphere will geometrically collide with either the center mounting hole or the deep bottom-edge USB-C Keyhole cutout.
 * **LED Placement (Critical):** The 16x SK6812 LEDs must be placed on the Top Layer, arranged in a perfect ring/circle along the outer perimeter of the board. They must be evenly spaced at exactly 22.5-degree intervals.
 * **Power Distribution & Safety:** 
   * Route the 5V VBUS net directly from the USB-C input to the LED array. Step down 5V to 3.3V via the LDO regulator exclusively for the ESP32-C6 module and logic circuitry.
@@ -66,10 +69,10 @@
 | **U3** | **74AHCT125** | 1 | 3.3V to 5V Logic Level Shifter (Single gate variant e.g., SN74AHCT1G125). |
 | **D1** | **SRV05-4** (or similar) | 1 | TVS Diode Array for ESD protection on USB data/power lines. |
 | **F1** | **PTC Resettable Fuse (2A-3A)** | 1 | Inline fuse on 5V VBUS for short circuit protection. |
-| **SW1** | **Tactile Push Button** | 1 | SMD push button for user control (Bottom Layer). |
+| **SW1** | **Tactile Push Button** | 1 | SMD push button for user control (Bottom Layer). **Must be Low-Profile (max 1.5mm height).** (Reason: Standard 6mm buttons add unacceptable Z-height and are trapped/unusable once sealed inside the plastic puck housing). |
 | **TH1** | **NTC Thermistor** (e.g., 10kΩ) | 1 | Temperature monitoring sensor. |
 | **C1, C2** | **10µF Ceramic Capacitor** | 2 | Decoupling for 3.3V LDO input and output (0805 or 0603). |
-| **CBLK1** | **470µF or 1000µF Capacitor** | 1 | Bulk capacitor for 5V LED rail (SMD Electrolytic or Tantalum/Polymer). |
+| **CBLK1** | **470µF or 1000µF Capacitor** | 1 | Bulk capacitor for 5V LED rail. **Must be a Low-Profile Tantalum Polymer SMD (max 3.0mm height).** (Reason: Standard tall electrolytic cylinder capacitors are 10mm+ tall and will completely violate the strict 10mm housing Z-limit). |
 | **C3, C4, C5** | **0.1µF Ceramic Capacitor** | 3 | Bypass capacitors for ESP32 and Level Shifter (0603). |
 | **C6 - C21** | **0.1µF Ceramic Capacitor** | 16 | Bypass capacitors (one for each SK6812 LED). |
 | **R1, R2** | **5.1kΩ Resistor** | 2 | USB-C CC1/CC2 pull-down resistors. |

@@ -20,10 +20,25 @@ cutout_slot_depth = 10; // Connects the inner hole to the perimeter
 cutout_slot_y = -25; // Reaches the outer edge
 
 // --- ESP32-C6-WROOM-1 Module (Bottom Layer) ---
-esp_width = 18;
-esp_length = 25.5;
-esp_height = 3.2;
-esp_offset_y = -3; 
+// Module must be rotated horizontally to fit in the top hemisphere
+esp_width = 25.5; // (Swapped length and width for horizontal orientation)
+esp_length = 18;
+esp_height = 3.2; // Module thickness + solder clearance
+esp_offset_y = 10; // Moved into the positive Y hemisphere, safely above the center mounting hole
+
+// --- Low-Profile Bulk Capacitor (Bottom Layer) ---
+cap_width = 7.3;
+cap_length = 4.3;
+cap_height = 3.0; // Tantalum Polymer SMD max height constraint
+cap_offset_y = -3;
+cap_offset_x = 10; // Placed firmly on the bottom right quadrant
+
+// --- Low-Profile Tactile Button (Bottom Layer) ---
+btn_width = 3.0;
+btn_length = 4.0;
+btn_height = 1.5; // Strict low profile constraint
+btn_offset_y = -3;
+btn_offset_x = -10; // Placed firmly on the bottom left quadrant 
 
 // --- USB-C Receptacle (Mid-Mount) ---
 usb_width = 9;
@@ -68,10 +83,20 @@ union() {
         cube([cutout_slot_width, cutout_slot_depth, pcb_thickness+2]);
     }
     
-    // 2. ESP32-C6 Module (Placed on BOTTOM)
+    // 2a. ESP32-C6 Module (Placed on BOTTOM, Top Hemisphere)
     color("silver")
     translate([-esp_width/2, esp_offset_y - esp_length/2, -esp_height])
     cube([esp_width, esp_length, esp_height]);
+    
+    // 2b. Low-Profile Bulk Capacitor (Bottom)
+    color("orange")
+    translate([cap_offset_x - cap_width/2, cap_offset_y - cap_length/2, -cap_height])
+    cube([cap_width, cap_length, cap_height]);
+    
+    // 2c. Low-Profile Tactile Button (Bottom)
+    color("black")
+    translate([btn_offset_x - btn_width/2, btn_offset_y - btn_length/2, -btn_height])
+    cube([btn_width, btn_length, btn_height]);
     
     // 3. USB-C Port (Mid-Mounted inside the cutout)
     // Using a brighter distinct color so it stands out against the PCB
