@@ -86,3 +86,23 @@
 | **R1, R2** | **5.1kΩ Resistor** | 2 | USB-C CC1/CC2 pull-down resistors. |
 | **R3** | **10kΩ Resistor** | 1 | Pull-up resistor for ESP32 EN pin / Thermistor voltage divider (may need matching resistor for thermistor). |
 | **R4** | **330Ω - 470Ω Resistor** | 1 | Series resistor for LED data line protection. |
+
+## **5. JLCPCB SMT Assembly Guidelines & LCSC Parts**
+
+To optimize for manufacturing costs and turnaround time at JLCPCB, the following parts routing is recommended. "Basic" parts are pre-loaded on the JLCPCB Pick-and-Place machines and incur zero feeder loading fees. "Extended" parts require manual reel loading by JLCPCB technicians and incur an ~$3.00 USD setup fee per unique component.
+
+| BOM Ref | Primary LCSC Recommendation | JLCPCB Status | Secondary Alternative | JLCPCB Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **U1 (ESP32-C6)** | **ESP32-C6-WROOM-1-N8** (Espressif)<br>*C5295988* | **Extended** | **ESP32-C6-MINI-1-N4** (Espressif)<br>*C5295989* | **Extended** |
+| **LED1-16 (SK6812)** | **SK6812-5050-RGBW** (Opsco)<br>*C2890022* | **Extended** | **WS2812B-B/W** (Worldsemi)<br>*(Note: RGB only, no White)* | **Basic** |
+| **J1 (USB-C)** | **2129691-2** (TE Connectivity)<br>*C3197911* | **Extended** | **USB4520-03-0-A** (GCT)<br>*C2988369* | **Extended** |
+| **U2 (3.3V LDO)** | **AP2112K-3.3TRG1** (Diodes Inc)<br>*C51118* | **Extended** | **XC6206P332MR** (Torex)<br>*(Cheaper, highly common variant)* | **Basic** |
+| **U3 (Level Shifter)** | **SN74AHCT1G125** (Texas Instruments)<br>*C131102* | **Extended** | **74HC125D** (Nexperia)<br>*(Standard 3.3V-compatible logic)* | **Basic** |
+| **D1 (TVS ESD)** | **SRV05-4** (Tech Public / Sembo)<br>*C558418* | **Extended** | **ESDA5V3L** (STMicroelectronics) | **Basic** |
+| **F1 (PTC Fuse)** | **1812 2A PTC** (Littelfuse or generic)<br>*C5074* | **Basic** | **1210 2A PTC** (Generic) | **Basic** |
+| **SW1-3 (Buttons)** | **3x4x1.5mm SMD Low-Profile**<br>*C318884* | **Extended** | **3x6x2.5mm SMD Standard**<br>*(Violates 1.5mm height constraint)* | **Basic** |
+| **DL1-2 (Dev LEDs)** | **0603 Red/Green/Blue LED** | **Basic** | **0805 Red/Green/Blue LED** | **Basic** |
+| **TH1 (Thermistor)**| **0603 10kΩ NTC** (Murata) | **Basic** | **0402 10kΩ NTC** | **Basic** |
+| **CBLK1 (Bulk Cap)**| **7343 470µF 6.3V Tantalum** (AVX)<br>*C7171* | **Extended** | **7343 330µF 6.3V Tantalum** | **Extended** |
+| **Decoupling Caps** | **10µF, 0.1µF Ceramic (0603)** | **Basic** | **10µF, 0.1µF Ceramic (0402)** | **Basic** |
+| **Resistors** | **5.1kΩ, 10kΩ, 330Ω (0603)** | **Basic** | **5.1kΩ, 10kΩ, 330Ω (0402)** | **Basic** |
