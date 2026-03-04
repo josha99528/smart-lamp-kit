@@ -6,9 +6,10 @@ pcb_diameter = 50;
 pcb_thickness = 1.6;
 
 // --- Mounting Holes ---
-// Assumed placed on a vertical axis near the top/bottom edges for stability
-hole_diameter = 3;
-hole_distance_from_center = 22; // 3mm from edge
+// 3 holes: one dead center, and two on the sides spaced 28mm apart
+outer_hole_diameter = 3.2; // M3 clearance for BT3 screws
+center_hole_diameter = 4.8;
+hole_distance_from_center = 14; // 28mm apart = 14mm radius
 
 // --- ESP32-C6-WROOM-1 Module (Bottom Layer) ---
 esp_width = 18;
@@ -37,13 +38,17 @@ union() {
         color("darkgreen")
         cylinder(h=pcb_thickness, d=pcb_diameter, $fn=100);
         
-        // Mounting Hole 1 (Top)
-        translate([0, hole_distance_from_center, -1])
-        cylinder(h=pcb_thickness+2, d=hole_diameter, $fn=50);
+        // Center Mounting Hole
+        translate([0, 0, -1])
+        cylinder(h=pcb_thickness+2, d=center_hole_diameter, $fn=50);
+
+        // Mounting Hole 2 (Left)
+        translate([-hole_distance_from_center, 0, -1])
+        cylinder(h=pcb_thickness+2, d=outer_hole_diameter, $fn=50);
         
-        // Mounting Hole 2 (Bottom)
-        translate([0, -hole_distance_from_center, -1])
-        cylinder(h=pcb_thickness+2, d=hole_diameter, $fn=50);
+        // Mounting Hole 3 (Right)
+        translate([hole_distance_from_center, 0, -1])
+        cylinder(h=pcb_thickness+2, d=outer_hole_diameter, $fn=50);
     }
     
     // 2. ESP32-C6 Module (Placed on BOTTOM, colored metallic grey)

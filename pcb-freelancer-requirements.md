@@ -15,7 +15,9 @@
 ## **2. Printed Circuit Board (PCB) Specifications**
 
 * **Dimensions:** 50 **mm** circular diameter.  
-* **Mechanical Fit:** Must include two 3mm mounting holes.  
+* **Mechanical Fit:** Must include three mounting holes for exact alignment with standard housing pins/screws:
+  * One dead-center hole (~4.8mm diameter).
+  * Two outer holes (3.2mm diameter for standard M3 / BT3 clearance), placed exactly **28mm apart** across the center (i.e., each hole is 14mm from the center point on the X-axis).
 * **Layer Count:** 4 Layers.  
 * **Assembly Routing:** Double-sided PCBA.  
   * **Top Layer:** Exclusively reserved for the 16x LED components to ensure unobstructed 360-degree light diffusion.  
