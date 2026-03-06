@@ -33,6 +33,15 @@ This is the standard, longer module. It takes up more of the inner circle but fe
 * **Height (Z):** 3.2 mm 
 * **Placement:** Placed on the **Bottom Layer**. (Note: At 3.2mm tall, this module would become the new lowest-hanging component on the board, surpassing the 3.0mm capacitor).
 
+### Low-Profile SMD Tactile Buttons (x3)
+* **Width/Length:** 3.0 mm x 4.0 mm
+* **Max Height (Z constraint):** 1.5 mm 
+
+### Status LEDs (x2)
+Two tiny 0603 or 0402 SMD LEDs for power and user-status.
+* **Size:** 1.6 mm x 0.8 mm (0603 package)
+* **Max Height (Z constraint):** < 1.0 mm
+
 ---
 
 ## 3. Major Component Clearances (Bottom Layer)
@@ -49,10 +58,6 @@ Because this is a "mid-mount" receptacle, its belly hangs below the board and it
 A large bulk capacitor used to stabilize the 5V LED rail.
 * **Width/Length:** 7.3 mm x 4.3 mm (EIA 7343 footprint metric)
 * **Max Height (Z):** 3.0 mm (This component is the tallest item on the bottom layer and dictates the absolute floor depth of the bottom housing cavity).
-
-### Low-Profile SMD Tactile Buttons (x3)
-* **Width/Length:** 3.0 mm x 4.0 mm
-* **Max Height (Z constraint):** 1.5 mm 
 
 > **Note on Minor Components:** All remaining logic chips (LDO regulator, level shifter) and passive components (resistors, tiny ceramic bypass capacitors) are extremely flat (under 1.5mm tall). As long as the Shapr3D housing provides enough empty Z-depth to clear the 3.0mm Tantalum Capacitor, all the tiny chips will easily clear.
 

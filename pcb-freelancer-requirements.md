@@ -19,9 +19,9 @@
 * **Total Vertical Height (Critical):** The absolute maximum height of the fully assembled PCBA (including the 1.6mm PCB, top LEDs, and all bottom components) must **not exceed 6.5 mm**. This is strictly required so it physically drops into the 10mm restrictive enclosure.
 * **Layer Count:** 4 Layers.  
 * **Assembly Routing:** Double-sided PCBA.  
-  * **Top Layer:** Reserved exclusively for the 8x LED components (arranged in a perimeter ring) and the top-side edge of the mid-mount USB-C receptacle.
+  * **Top Layer:** Reserved exclusively for the 8x LED components (arranged in a perimeter ring), the top-side edge of the mid-mount USB-C receptacle, the 3x tactile push buttons, and the 2x status LEDs.
   * **Inner Layers:** Utilize for dedicated Ground (GND) and Power (5V/3.3V) planes to simplify routing and improve thermal dissipation.
-  * **Bottom Layer:** ESP32-C6 module, bottom-side edge of the mid-mount USB-C receptacle, voltage regulator, level shifter, tactile buttons, and all passive components.
+  * **Bottom Layer:** ESP32-C6 module, bottom-side edge of the mid-mount USB-C receptacle, voltage regulator, level shifter, and all passive components.
 * **Material:** FR-4 (TG130 or TG150).  
 * **Thickness:** 1.6 mm.  
 * **Copper Weight:** 1 oz.  
@@ -59,7 +59,7 @@
 * **User Interface & Development Features:** 
   * **User Button:** Connect one tactile button between a standard GPIO pin and Ground for user input (e.g., toggling the lamp). Do not hardwire this to strapping pins.
   * **Boot & Reset Buttons:** Include two tactile buttons specifically for development: one connected to the `EN` pin (Reset) and one connected to `GPIO9` (Boot). These are essential for manual firmware flashing. 
-  * **Status LEDs:** Include two 0603 or 0402 SMD LEDs on the bottom layer:
+  * **Status LEDs:** Include two 0603 or 0402 SMD LEDs on the Top Layer:
     * **Power LED:** Connected to the 3.3V rail (with a suitable current-limiting resistor) to indicate system power.
     * **User LED:** Connected to a free GPIO pin (with a suitable resistor) for user-programmable status indication.
 
@@ -74,10 +74,10 @@
 | **U3** | **74AHCT125** | 1 | 3.3V to 5V Logic Level Shifter (Single gate variant e.g., SN74AHCT1G125). |
 | **D1** | **SRV05-4** (or similar) | 1 | TVS Diode Array for ESD protection on USB data/power lines. |
 | **F1** | **PTC Resettable Fuse (2A-3A)** | 1 | Inline fuse on 5V VBUS for short circuit protection. |
-| **SW1** | **Tactile Push Button** | 1 | SMD push button for user control (Bottom Layer). **Must be Low-Profile (max 1.5mm height).** |
-| **SW2, SW3** | **Tactile Push Button** | 2 | Boot and Reset buttons for development. Must also be low profile. |
-| **DL1** | **Red/Green SMD LED (0603)** | 1 | System Power indicator LED. |
-| **DL2** | **Blue SMD LED (0603)** | 1 | User programmable status LED. |
+| **SW1** | **Tactile Push Button** | 1 | SMD push button for user control (Top Layer). **Must be Low-Profile (max 1.5mm height).** |
+| **SW2, SW3** | **Tactile Push Button** | 2 | Boot and Reset buttons for development. Must also be low profile. (Top Layer). |
+| **DL1** | **Red/Green SMD LED (0603)** | 1 | System Power indicator LED (Top Layer). |
+| **DL2** | **Blue SMD LED (0603)** | 1 | User programmable status LED (Top Layer). |
 | **R5, R6** | **Current Limiting Resistors** | 2 | Resistors for DL1 and DL2. |
 | **TH1** | **NTC Thermistor** (e.g., 10kΩ) | 1 | Temperature monitoring sensor. |
 | **C1, C2** | **10µF Ceramic Capacitor** | 2 | Decoupling for 3.3V LDO input and output (0805 or 0603). |
