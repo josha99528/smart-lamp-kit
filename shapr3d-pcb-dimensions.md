@@ -6,8 +6,7 @@ This document provides the exact physical dimensions, placement constraints, and
 The core fiberglass board that forms the foundation of the electronics.
 
 * **Diameter (X/Y):** 50.0 mm
-* **Thickness (Z):** 1.6 mm
-* **Total Assembly Max Height:** 10.0 mm (The absolute ceiling limit from the bottom of the lowest component to the top of the highest component).
+* **Total Assembly Max Height:** 6.5 mm (The absolute ceiling limit from the bottom of the lowest component to the top of the highest component, fitting inside a 10.0 mm housing).
 
 ---
 

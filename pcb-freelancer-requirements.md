@@ -15,7 +15,7 @@
 ## **2. Printed Circuit Board (PCB) Specifications**
 
 * **Dimensions:** 50 **mm** circular diameter.  
-* **Total Vertical Height (Critical):** The absolute maximum height of the fully assembled PCBA (including the 1.6mm PCB, top LEDs, and all bottom components) must **not exceed 10.0 mm**. This is strictly required so it physically drops into restrictive 3D printed housings designed around the Bambu Lab puck.
+* **Total Vertical Height (Critical):** The absolute maximum height of the fully assembled PCBA (including the 1.6mm PCB, top LEDs, and all bottom components) must **not exceed 6.5 mm**. This is strictly required so it physically drops into the 10mm restrictive 3D printed housing designed around the Bambu Lab puck.
 * **Layer Count:** 4 Layers.  
 * **Assembly Routing:** Double-sided PCBA.  
   * **Top Layer:** Reserved exclusively for the 16x LED components (arranged in a perimeter ring) and the Top-Side edge of the USB-C cutout.
@@ -80,7 +80,7 @@
 | **R5, R6** | **Current Limiting Resistors** | 2 | Resistors for DL1 and DL2. |
 | **TH1** | **NTC Thermistor** (e.g., 10kΩ) | 1 | Temperature monitoring sensor. |
 | **C1, C2** | **10µF Ceramic Capacitor** | 2 | Decoupling for 3.3V LDO input and output (0805 or 0603). |
-| **CBLK1** | **470µF or 1000µF Capacitor** | 1 | Bulk capacitor for 5V LED rail. **Must be a Low-Profile Tantalum Polymer SMD (max 3.0mm height).** (Reason: Standard tall electrolytic cylinder capacitors are 10mm+ tall and will completely violate the strict 10mm housing Z-limit). |
+| **CBLK1** | **470µF or 1000µF Capacitor** | 1 | Bulk capacitor for 5V LED rail. **Must be a Low-Profile Tantalum Polymer SMD (max 3.0mm height).** (Reason: Standard tall electrolytic cylinder capacitors are tall and will completely violate the strict 6.5mm PCBA Z-limit). |
 | **C3, C4, C5** | **0.1µF Ceramic Capacitor** | 3 | Bypass capacitors for ESP32 and Level Shifter (0603). |
 | **C6 - C21** | **0.1µF Ceramic Capacitor** | 16 | Bypass capacitors (one for each SK6812 LED). |
 | **R1, R2** | **5.1kΩ Resistor** | 2 | USB-C CC1/CC2 pull-down resistors. |
