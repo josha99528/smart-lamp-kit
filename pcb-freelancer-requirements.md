@@ -26,7 +26,7 @@
 * **Copper Weight:** 1 oz.  
 * **Surface Finish:** HASL Lead-Free or ENIG.  
 * **Programming & Testing:** Must include 6x bare copper test pads on the bottom layer (**3V3, GND, EN, IO9/BOOT, TXD, RXD**) exposed for a factory pogo-pin programming jig. These pads must be spaced at least 2.54mm apart or arranged in a standard programming header footprint.
-* **Silkscreen Requirements:** Must print the FCC ID of the ESP32-C6 module on the bottom silkscreen (e.g., "Contains FCC ID: 2AC7Z-ESP32C6" - verify exact ID for the specific WROOM-1 variant chosen).
+* **Silkscreen Requirements:** Must print the FCC ID of the ESP32-C6 module on the bottom silkscreen (e.g., "Contains FCC ID: 2AC7Z-ESP32C6M" - verify exact ID for the specific MINI-1 variant chosen).
 
 ## **3. Hardware & Routing Guidelines**
 
@@ -54,7 +54,7 @@
 * **Logic Level Shifting & LED Data:** 
   * Place a 3.3V-to-5V level shifter (e.g., 74AHCT125) on the data line between the ESP32-C6 GPIO output and the data-in pin of the first SK6812 LED.
   * Add a 330Ω to 470Ω series resistor between the level shifter output and the data input of LED1 to damp signal ringing.
-* **Antenna Clearance:** Ensure there are no copper pours, traces, or components on any layer directly beneath or adjacent to the PCB antenna trace of the ESP32-C6-WROOM-1 module.  
+* **Antenna Clearance:** Ensure there are no copper pours, traces, or components on any layer directly beneath or adjacent to the PCB antenna trace of the ESP32-C6-MINI-1-N4 module.  
 * **User Interface & Development Features:** 
   * **User Button:** Connect one tactile button between a standard GPIO pin and Ground for user input (e.g., toggling the lamp). Do not hardwire this to strapping pins.
   * **Boot & Reset Buttons:** Include two tactile buttons specifically for development: one connected to the `EN` pin (Reset) and one connected to `GPIO9` (Boot). These are essential for manual firmware flashing. 
@@ -66,7 +66,7 @@
 
 | Reference Designator | Component Name / Part Number | Qty | Description |
 | ----- | ----- | ----- | ----- |
-| **U1** | **ESP32-C6-WROOM-1** | 1 | Wi-Fi 6, Bluetooth 5, Zigbee MCU module. |
+| **U1** | **ESP32-C6-MINI-1** | 1 | Ultra-compact Wi-Fi 6, Bluetooth 5, Zigbee MCU module. |
 | **LED1 - LED16** | **SK6812-5050-RGBW (Warm White)** | 16 | 5V Addressable RGB + Warm White LED. Top layer mount. |
 | **J1** | **USB Type-C Receptacle** | 1 | 16-pin or 6-pin power+data SMD edge connector, bottom-mount style. |
 | **U2** | **AP2112K-3.3TRG1** | 1 | 3.3V, 600mA Low Dropout (LDO) Voltage Regulator. |
@@ -93,7 +93,7 @@ To optimize for manufacturing costs and turnaround time at JLCPCB, the following
 
 | BOM Ref | Primary LCSC Recommendation | JLCPCB Status | Secondary Alternative | JLCPCB Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **U1 (ESP32-C6)** | **ESP32-C6-WROOM-1-N8** (Espressif)<br>*C5295988* | **Extended** | **ESP32-C6-MINI-1-N4** (Espressif)<br>*C5295989* | **Extended** |
+| **U1 (ESP32-C6)** | **ESP32-C6-MINI-1-N4** (Espressif)<br>*C5295989* | **Extended** | **ESP32-C6-WROOM-1-N8** (Espressif)<br>*C5295988* | **Extended** |
 | **LED1-16 (SK6812)** | **SK6812-5050-RGBW** (Opsco)<br>*C2890022* | **Extended** | **WS2812B-B/W** (Worldsemi)<br>*(Note: RGB only, no White)* | **Basic** |
 | **J1 (USB-C)** | **2129691-2** (TE Connectivity)<br>*C3197911* | **Extended** | **USB4520-03-0-A** (GCT)<br>*C2988369* | **Extended** |
 | **U2 (3.3V LDO)** | **AP2112K-3.3TRG1** (Diodes Inc)<br>*C51118* | **Extended** | **XC6206P332MR** (Torex)<br>*(Cheaper, highly common variant)* | **Basic** |

@@ -17,8 +17,8 @@ Because highly specialized ICs and proprietary connectors belong to their respec
 * **Download Portal:** [SnapEDA (SnapMagic) - TE 2129691-2](https://www.snapeda.com/parts/2129691-2/TE%20Connectivity/view-part/)
 * **Instructions:** Click "Download 3D Model", sign in (or create a free account), and select the `.STEP` option. This will give you the precise metal lip geometry needed to refine your housing's stepped keyhole cutout.
 
-### B. The Microcontroller Module (Espressif `ESP32-C6-WROOM-1`)
-* **Download Portal:** [Ultra Librarian / DigiKey - ESP32-C6-WROOM-1-N8](https://www.ultralibrarian.com/part/ESP32-C6-WROOM-1-N8-Espressif-Systems)
-* **Instructions:** Click "Download Now", select "3D CAD Model", choose the `STEP` format, and check out for free. This model dictates the absolute ceiling of your top-layer housing constraints. 
+### B. The Microcontroller Module (Espressif `ESP32-C6-MINI-1-N4`)
+* **Download Portal:** [SnapEDA (SnapMagic) - ESP32-C6-MINI-1-N4](https://www.snapeda.com/parts/ESP32-C6-MINI-1-N4/Espressif%20Systems/view-part/)
+* **Instructions:** Click "Download 3D Model". This is the specific 13.2 x 16.6 x 2.4 mm model. 
 
-*(If you decide to switch to the smaller MINI module later against my recommendation, search the same portals for `ESP32-C6-MINI-1` instead).*
+*(If you ever need to fall back to the larger WROOM variant with the higher gain antenna, search the portals for `ESP32-C6-WROOM-1-N8`).*
