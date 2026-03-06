@@ -3,7 +3,7 @@
 ## **1. Project Overview & Deliverables**
 
 * **Objective:** Design a custom 50 mm circular PCB.  
-* **Core Functionality:** An ESP32-C6-based smart light utilizing 8 addressable RGBW (warm white) LEDs. It must be powered via USB-C and support data transfer over USB-C for initial firmware flashing (USB-C data wires must be mapped to ESP32-C6 module).  
+* **Core Functionality:** An ESP32-C6-based smart light utilizing 8 addressable RGBW (warm white) LEDs. It must be powered via USB-C and support data transfer over USB-C for initial firmware flashing and data-over-USB feature controlled by the ESP32 module. 
 * **Design Software Requirement:** **KiCad** (Latest stable version). No proprietary or cloud-locked EDA tools are permitted.  
 * **Required Deliverables:**  
   * Native KiCad schematic (`.kicad_sch`) and PCB layout (`.kicad_pcb`) source files.  
@@ -11,16 +11,17 @@
   * Bill of Materials (BOM) in CSV format, strictly mapped to JLCPCB LCSC part numbers.  
   * Component Placement List (CPL) / Pick-and-Place file for automated assembly.  
   * 3D STEP file of the fully populated board for mechanical fit verification.
+  * **Pinout Mapping Table:** A simple text or markdown file explicitly listing which ESP32-C6 GPIO pins were routed to the LEDs, Buttons, and USB Data lines, to ensure immediate readiness for software development.
 
 ## **2. Printed Circuit Board (PCB) Specifications**
 
 * **Dimensions:** 50 **mm** circular diameter.  
-* **Total Vertical Height (Critical):** The absolute maximum height of the fully assembled PCBA (including the 1.6mm PCB, top LEDs, and all bottom components) must **not exceed 6.5 mm**. This is strictly required so it physically drops into the 10mm restrictive 3D printed housing designed around the Bambu Lab puck.
+* **Total Vertical Height (Critical):** The absolute maximum height of the fully assembled PCBA (including the 1.6mm PCB, top LEDs, and all bottom components) must **not exceed 6.5 mm**. This is strictly required so it physically drops into the 10mm restrictive enclosure.
 * **Layer Count:** 4 Layers.  
 * **Assembly Routing:** Double-sided PCBA.  
-  * **Top Layer:** Reserved exclusively for the 8x LED components (arranged in a perimeter ring) and the Top-Side edge of the USB-C cutout.
+  * **Top Layer:** Reserved exclusively for the 8x LED components (arranged in a perimeter ring) and the top-side edge of the mid-mount USB-C receptacle.
   * **Inner Layers:** Utilize for dedicated Ground (GND) and Power (5V/3.3V) planes to simplify routing and improve thermal dissipation.
-  * **Bottom Layer:** ESP32-C6 module, USB-C receptacle, voltage regulator, level shifter, tactile buttons, and all passive components.
+  * **Bottom Layer:** ESP32-C6 module, bottom-side edge of the mid-mount USB-C receptacle, voltage regulator, level shifter, tactile buttons, and all passive components.
 * **Material:** FR-4 (TG130 or TG150).  
 * **Thickness:** 1.6 mm.  
 * **Copper Weight:** 1 oz.  
@@ -46,9 +47,9 @@
   * **The Multi-Stage "Stepped Keyhole" Cutout Geometry:** The PCB edge must feature a complex stepped cutout. Do NOT use a single massive square void, or the receptacle will fall through.
     1. **Inner Void (Strain Relief Chamber):** Deepest into the board, a void wide enough (~14mm) and deep enough to completely bury the rigid plastic strain relief head of a male USB-C cable.
     2. **Receptacle Bridge (Mounting Support):** Immediately outward from the inner void, the fiberglass must "pinch" inwards, leaving enough solid PCB on the left and right sides to mechanically support and solder the mid-mount receptacle's SMD mounting wings and grounding tabs, while following the exact ~12.35mm internal hole mandated by the TE footprint. 
-    3. **Outer Slot (Wire Exit):** At the extreme outer perimeter of the 50mm board, the cutout must narrow down to a **~4.5mm to 5mm slot**. 
-  * **LED Ring Preservation (Critical):** Because the very outer perimeter slot is only 5mm wide, the flexible cord can exit the board without interrupting the ring of 8 LEDs. The user will drop the cable head into the inner void from the Z-axis, plug it into the receptacle bridge, and lay the wire through the narrow exit slot before placing the board in its enclosure.
-  * Route USB D+ and D- to the ESP32-C6 hardware USB/JTAG pins for native USB flashing. 
+    3. **Outer Slot (Wire Exit):** At the extreme outer perimeter of the 50mm board, the cutout must narrow down to a **6.5mm slot**. 
+  * **LED Ring Preservation (Critical):** Because the very outer perimeter slot is only 6.5mm wide, the flexible cord can exit the board without interrupting the ring of 8 LEDs. The user will drop the cable head into the inner void from the Z-axis, plug it into the receptacle bridge, and lay the wire through the narrow exit slot before placing the board in its enclosure.
+  * Route USB D+ and D- to the ESP32-C6's dedicated hardware USB Serial/JTAG pins (**GPIO12 for USB_D-** and **GPIO13 for USB_D+**). This is mandatory to support both native firmware flashing and your custom data-over-USB smart cable functionality.
   * Include two 5.1kΩ pull-down resistors on CC1 and CC2.
   * Add a TVS diode array (e.g., SRV05-4) on the USB-C VBUS, D+, and D- lines for ESD protection.
 * **Logic Level Shifting & LED Data:** 
