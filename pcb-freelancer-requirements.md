@@ -3,7 +3,7 @@
 ## **1. Project Overview & Deliverables**
 
 * **Objective:** Design a custom 50 mm circular PCB.  
-* **Core Functionality:** An ESP32-C6-based smart light utilizing 16 addressable RGBW (warm white) LEDs. It must be powered via USB-C and support data transfer over USB-C for initial firmware flashing (USB-C data wires must be mapped to ESP32-C6 module).  
+* **Core Functionality:** An ESP32-C6-based smart light utilizing 8 addressable RGBW (warm white) LEDs. It must be powered via USB-C and support data transfer over USB-C for initial firmware flashing (USB-C data wires must be mapped to ESP32-C6 module).  
 * **Design Software Requirement:** **KiCad** (Latest stable version). No proprietary or cloud-locked EDA tools are permitted.  
 * **Required Deliverables:**  
   * Native KiCad schematic (`.kicad_sch`) and PCB layout (`.kicad_pcb`) source files.  
@@ -18,7 +18,7 @@
 * **Total Vertical Height (Critical):** The absolute maximum height of the fully assembled PCBA (including the 1.6mm PCB, top LEDs, and all bottom components) must **not exceed 6.5 mm**. This is strictly required so it physically drops into the 10mm restrictive 3D printed housing designed around the Bambu Lab puck.
 * **Layer Count:** 4 Layers.  
 * **Assembly Routing:** Double-sided PCBA.  
-  * **Top Layer:** Reserved exclusively for the 16x LED components (arranged in a perimeter ring) and the Top-Side edge of the USB-C cutout.
+  * **Top Layer:** Reserved exclusively for the 8x LED components (arranged in a perimeter ring) and the Top-Side edge of the USB-C cutout.
   * **Inner Layers:** Utilize for dedicated Ground (GND) and Power (5V/3.3V) planes to simplify routing and improve thermal dissipation.
   * **Bottom Layer:** ESP32-C6 module, USB-C receptacle, voltage regulator, level shifter, tactile buttons, and all passive components.
 * **Material:** FR-4 (TG130 or TG150).  
@@ -32,7 +32,7 @@
 
 * **Component Placement & Clearances (Critical):**
   * **ESP32-C6 Placement:** The module must be placed on the **Bottom Layer**. The massive USB-C Keyhole Cutout consumes too much space within the Top Layer LED ring. The ESP32 must be placed carefully on the bottom layer to avoid the USB receptacle pins.
-* **LED Placement (Critical):** The 16x SK6812 LEDs must be placed on the Top Layer, arranged in a perfect ring/circle along the outer perimeter of the board. They must be evenly spaced at exactly 22.5-degree intervals.
+* **LED Placement (Critical):** The 8x SK6812 LEDs must be placed on the Top Layer, arranged in a perfect ring/circle along the outer perimeter of the board. They must be evenly spaced at exactly 45-degree intervals.
 * **Power Distribution & Safety:** 
   * Route the 5V VBUS net directly from the USB-C input to the LED array. Step down 5V to 3.3V via the LDO regulator exclusively for the ESP32-C6 module and logic circuitry.
   * Include a 2A or 3A PTC resettable inline fuse on the 5V VBUS intake to prevent fire hazards from short circuits.
@@ -47,7 +47,7 @@
     1. **Inner Void (Strain Relief Chamber):** Deepest into the board, a void wide enough (~14mm) and deep enough to completely bury the rigid plastic strain relief head of a male USB-C cable.
     2. **Receptacle Bridge (Mounting Support):** Immediately outward from the inner void, the fiberglass must "pinch" inwards, leaving enough solid PCB on the left and right sides to mechanically support and solder the mid-mount receptacle's SMD mounting wings and grounding tabs, while following the exact ~12.35mm internal hole mandated by the TE footprint. 
     3. **Outer Slot (Wire Exit):** At the extreme outer perimeter of the 50mm board, the cutout must narrow down to a **~4.5mm to 5mm slot**. 
-  * **LED Ring Preservation (Critical):** Because the very outer perimeter slot is only 5mm wide, the flexible cord can exit the board without interrupting the ring of 16 LEDs. The user will drop the cable head into the inner void from the Z-axis, plug it into the receptacle bridge, and lay the wire through the narrow exit slot before placing the board in its enclosure.
+  * **LED Ring Preservation (Critical):** Because the very outer perimeter slot is only 5mm wide, the flexible cord can exit the board without interrupting the ring of 8 LEDs. The user will drop the cable head into the inner void from the Z-axis, plug it into the receptacle bridge, and lay the wire through the narrow exit slot before placing the board in its enclosure.
   * Route USB D+ and D- to the ESP32-C6 hardware USB/JTAG pins for native USB flashing. 
   * Include two 5.1kΩ pull-down resistors on CC1 and CC2.
   * Add a TVS diode array (e.g., SRV05-4) on the USB-C VBUS, D+, and D- lines for ESD protection.
@@ -67,7 +67,7 @@
 | Reference Designator | Component Name / Part Number | Qty | Description |
 | ----- | ----- | ----- | ----- |
 | **U1** | **ESP32-C6-MINI-1** | 1 | Ultra-compact Wi-Fi 6, Bluetooth 5, Zigbee MCU module. Bottom layer mount. |
-| **LED1 - LED16** | **SK6812-5050-RGBW (Warm White)** | 16 | 5V Addressable RGB + Warm White LED. Top layer mount. |
+| **LED1 - LED8** | **SK6812-5050-RGBW (Warm White)** | 8 | 5V Addressable RGB + Warm White LED. Top layer mount. |
 | **J1** | **USB Type-C Receptacle** | 1 | 16-pin or 6-pin power+data SMD edge connector, bottom-mount style. |
 | **U2** | **AP2112K-3.3TRG1** | 1 | 3.3V, 600mA Low Dropout (LDO) Voltage Regulator. |
 | **U3** | **74AHCT125** | 1 | 3.3V to 5V Logic Level Shifter (Single gate variant e.g., SN74AHCT1G125). |
@@ -82,7 +82,7 @@
 | **C1, C2** | **10µF Ceramic Capacitor** | 2 | Decoupling for 3.3V LDO input and output (0805 or 0603). |
 | **CBLK1** | **470µF or 1000µF Capacitor** | 1 | Bulk capacitor for 5V LED rail. **Must be a Low-Profile Tantalum Polymer SMD (max 3.0mm height).** (Reason: Standard tall electrolytic cylinder capacitors are tall and will completely violate the strict 6.5mm PCBA Z-limit). |
 | **C3, C4, C5** | **0.1µF Ceramic Capacitor** | 3 | Bypass capacitors for ESP32 and Level Shifter (0603). |
-| **C6 - C21** | **0.1µF Ceramic Capacitor** | 16 | Bypass capacitors (one for each SK6812 LED). |
+| **C6 - C13** | **0.1µF Ceramic Capacitor** | 8 | Bypass capacitors (one for each SK6812 LED). |
 | **R1, R2** | **5.1kΩ Resistor** | 2 | USB-C CC1/CC2 pull-down resistors. |
 | **R3** | **10kΩ Resistor** | 1 | Pull-up resistor for ESP32 EN pin / Thermistor voltage divider (may need matching resistor for thermistor). |
 | **R4** | **330Ω - 470Ω Resistor** | 1 | Series resistor for LED data line protection. |
@@ -94,7 +94,7 @@ To optimize for manufacturing costs and turnaround time at JLCPCB, the following
 | BOM Ref | Primary LCSC Recommendation | JLCPCB Status | Secondary Alternative | JLCPCB Status |
 | :--- | :--- | :--- | :--- | :--- |
 | **U1 (ESP32-C6)** | **ESP32-C6-MINI-1-N4** (Espressif)<br>*C5295989* | **Extended** | **ESP32-C6-WROOM-1-N8** (Espressif)<br>*C5295988* | **Extended** |
-| **LED1-16 (SK6812)** | **SK6812-5050-RGBW** (Opsco)<br>*C2890022* | **Extended** | **WS2812B-B/W** (Worldsemi)<br>*(Note: RGB only, no White)* | **Basic** |
+| **LED1-8 (SK6812)** | **SK6812-5050-RGBW** (Opsco)<br>*C2890022* | **Extended** | **WS2812B-B/W** (Worldsemi)<br>*(Note: RGB only, no White)* | **Basic** |
 | **J1 (USB-C)** | **2129691-2** (TE Connectivity)<br>*C3197911* | **Extended** | **USB4520-03-0-A** (GCT)<br>*C2988369* | **Extended** |
 | **U2 (3.3V LDO)** | **AP2112K-3.3TRG1** (Diodes Inc)<br>*C51118* | **Extended** | **XC6206P332MR** (Torex)<br>*(Cheaper, highly common variant)* | **Basic** |
 | **U3 (Level Shifter)** | **SN74AHCT1G125** (Texas Instruments)<br>*C131102* | **Extended** | **74HC125D** (Nexperia)<br>*(Standard 3.3V-compatible logic)* | **Basic** |

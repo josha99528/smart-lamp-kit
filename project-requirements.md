@@ -3,7 +3,7 @@
 ## **1. Project Overview & Deliverables**
 
 * **Objective:** Design a custom 50 mm circular PCB.  
-* **Core Functionality:** An ESP32-C6-based smart light utilizing 16 addressable RGBW (warm white) LEDs. It must be powered via USB-C and support data transfer over USB-C for initial firmware flashing and software features (USB-C data wires must be mapped to ESP32-C6 module).  
+* **Core Functionality:** An ESP32-C6-based smart light utilizing 8 addressable RGBW (warm white) LEDs. It must be powered via USB-C and support data transfer over USB-C for initial firmware flashing and software features (USB-C data wires must be mapped to ESP32-C6 module).  
 * **Design Software Requirement:** **KiCad** (Latest stable version). No proprietary or cloud-locked EDA tools are permitted (e.g., [Flux.ai](http://flux.ai/), Altium, Eagle).  
 * **Required Deliverables:**  
   * Native KiCad schematic (`.kicad_sch`) and PCB layout (`.kicad_pcb`) source files.  

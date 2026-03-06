@@ -6,7 +6,7 @@ To help you accurately model the restrictive 10mm housing in Shapr3D, I have gat
 A new `/3d_models` folder has been added to this repository. It contains the raw, open-source `.step` files for exactly-dimensioned generic components directly from the official KiCad 3D libraries:
 
 * **`CP_EIA-7343-15_Kemet-W.step`**: The exact metric 7343 (Imperial Size D) low-profile Tantalum Capacitor footprint. You can use this to model the tallest component on the bottom layer.
-* **`LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm.step`**: The precise 5.0mm x 5.0mm surface-mount RGBW LED package. You can import this once and duplicate it 16 times in a circular array in Shapr3D.
+* **`LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm.step`**: The precise 5.0mm x 5.0mm surface-mount RGBW LED package. You can import this once and duplicate it 8 times in a circular array in Shapr3D.
 
 ## 2. Proprietary Vendor STEP Files
 Because highly specialized ICs and proprietary connectors belong to their respective manufacturers, they legally restrict the direct redistribution of their raw `.step` files. 
