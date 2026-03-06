@@ -25,14 +25,14 @@ This is the severely compressed variant chosen to ensure maximum clearance insid
 * **Width (X):** 13.2 mm
 * **Length (Y):** 16.6 mm
 * **Height (Z):** 2.4 mm
-* **Placement:** Placed horizontally, dead-center inside the 16-LED ring. 
+* **Placement:** Placed on the **Bottom Layer**. Because it is 2.4mm tall, it easily fits within the 3.0mm Z-depth floor established by the bulk capacitor.
 
 ### MCU Module Option B: ESP32-C6-WROOM-1 (Alternative Range-Extender)
 This is the standard, longer module. It takes up more of the inner circle but features a much stronger high-gain antenna (3.26 dBi) for better wall penetration.
 * **Width (X):** 18.0 mm
 * **Length (Y):** 25.5 mm
 * **Height (Z):** 3.2 mm 
-* **Placement:** Also centered horizontally inside the LED ring. 
+* **Placement:** Placed on the **Bottom Layer**. (Note: At 3.2mm tall, this module would become the new lowest-hanging component on the board, surpassing the 3.0mm capacitor).
 
 ---
 

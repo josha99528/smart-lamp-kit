@@ -18,9 +18,9 @@
 * **Total Vertical Height (Critical):** The absolute maximum height of the fully assembled PCBA (including the 1.6mm PCB, top LEDs, and all bottom components) must **not exceed 10.0 mm**. This is strictly required so it physically drops into restrictive 3D printed housings designed around the Bambu Lab puck.
 * **Layer Count:** 4 Layers.  
 * **Assembly Routing:** Double-sided PCBA.  
-  * **Top Layer:** Reserved for the 16x LED components (arranged in a perimeter ring) and the ESP32-C6 module (placed centrally inside the ring).  
+  * **Top Layer:** Reserved exclusively for the 16x LED components (arranged in a perimeter ring) and the Top-Side edge of the USB-C cutout.
   * **Inner Layers:** Utilize for dedicated Ground (GND) and Power (5V/3.3V) planes to simplify routing and improve thermal dissipation.
-  * **Bottom Layer:** USB-C receptacle, voltage regulator, level shifter, tactile button, and all passive components.  
+  * **Bottom Layer:** ESP32-C6 module, USB-C receptacle, voltage regulator, level shifter, tactile buttons, and all passive components.
 * **Material:** FR-4 (TG130 or TG150).  
 * **Thickness:** 1.6 mm.  
 * **Copper Weight:** 1 oz.  
@@ -31,7 +31,7 @@
 ## **3. Hardware & Routing Guidelines**
 
 * **Component Placement & Clearances (Critical):**
-  * **ESP32-C6 Placement:** The module is large (25.5mm long). It MUST be rotated horizontally and placed on the Top Layer, entirely within the empty circular space completely surrounded by the 16 LEDs. Placing it on the bottom layer will collide with the massive deep bottom-edge USB-C Keyhole cutout.
+  * **ESP32-C6 Placement:** The module must be placed on the **Bottom Layer**. The massive USB-C Keyhole Cutout consumes too much space within the Top Layer LED ring. The ESP32 must be placed carefully on the bottom layer to avoid the USB receptacle pins.
 * **LED Placement (Critical):** The 16x SK6812 LEDs must be placed on the Top Layer, arranged in a perfect ring/circle along the outer perimeter of the board. They must be evenly spaced at exactly 22.5-degree intervals.
 * **Power Distribution & Safety:** 
   * Route the 5V VBUS net directly from the USB-C input to the LED array. Step down 5V to 3.3V via the LDO regulator exclusively for the ESP32-C6 module and logic circuitry.
@@ -66,7 +66,7 @@
 
 | Reference Designator | Component Name / Part Number | Qty | Description |
 | ----- | ----- | ----- | ----- |
-| **U1** | **ESP32-C6-MINI-1** | 1 | Ultra-compact Wi-Fi 6, Bluetooth 5, Zigbee MCU module. |
+| **U1** | **ESP32-C6-MINI-1** | 1 | Ultra-compact Wi-Fi 6, Bluetooth 5, Zigbee MCU module. Bottom layer mount. |
 | **LED1 - LED16** | **SK6812-5050-RGBW (Warm White)** | 16 | 5V Addressable RGB + Warm White LED. Top layer mount. |
 | **J1** | **USB Type-C Receptacle** | 1 | 16-pin or 6-pin power+data SMD edge connector, bottom-mount style. |
 | **U2** | **AP2112K-3.3TRG1** | 1 | 3.3V, 600mA Low Dropout (LDO) Voltage Regulator. |
