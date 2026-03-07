@@ -26,7 +26,10 @@
 * **Thickness:** 1.6 mm.  
 * **Copper Weight:** 1 oz.  
 * **Surface Finish:** HASL Lead-Free or ENIG.  
-* **Programming & Testing:** Must include 6x bare copper test pads on the bottom layer (**3V3, GND, EN, IO9/BOOT, TXD, RXD**) exposed for a factory pogo-pin programming jig. These pads must be spaced at least 2.54mm apart or arranged in a standard programming header footprint.
+* **Programming & Testing (Critical):** Must include exposed bare copper test pads on the bottom layer for the following diagnostic and programming nets:
+  * **Factory Programming:** `3V3`, `GND`, `EN`, `IO9/BOOT`, `TXD`, `RXD`. These pads must be spaced at least 2.54mm apart or arranged in a standard programming header footprint.
+  * **Hardware Diagnostics:** `5V_VBUS` (tied to the USB-C input before the fuse) and `LED_DI` (tied to the data-in line of the first SK6812 LED).
+* **Spare GPIO Breakouts:** Any ESP32-C6 GPIO pins that are not actively used by the mandatory components must be broken out to the Bottom Layer. The designer may choose to provide these as scattered tiny copper solder pads or a consolidated 1.27mm / 2.54mm unpopulated through-hole header, depending on available board real estate.
 * **Silkscreen Requirements:** Must print the FCC ID of the ESP32-C6 module on the bottom silkscreen (e.g., "Contains FCC ID: 2AC7Z-ESP32C6M" - verify exact ID for the specific MINI-1 variant chosen).
 
 ## **3. Hardware & Routing Guidelines**
