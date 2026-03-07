@@ -13,11 +13,11 @@ The core fiberglass board that forms the foundation of the electronics.
 ## 2. Major Component Clearances (Top Layer)
 These components dictate the "ceiling" of the 3D printed housing above the board.
 
-### Addressable LEDs (8x SK6812 RGBW)
+### Addressable LEDs (11x SK6812 RGBW)
 The LEDs form a perfect ring around the perimeter of the board.
 * **Size (X/Y):** 5.0 mm x 5.0 mm
 * **Height (Z):** 1.6 mm
-* **Placement:** Centered perfectly on a 42.0 mm diameter circle (a 21.0 mm radius from the board center). Spaced at exactly 45-degree intervals.
+* **Placement:** Centered perfectly on a 42.0 mm diameter circle (a 21.0 mm radius from the board center). Spaced at exactly ~32.7-degree intervals (360/11).
 
 ### MCU Module Option A: ESP32-C6-MINI-1-N4 (Selected Base)
 This is the severely compressed variant chosen to ensure maximum clearance inside the housing. It has a built-in PCB trace antenna (up to 2.33 dBi) for local mesh routing.
@@ -81,4 +81,4 @@ The large empty cavern inside the board's footprint.
 ### Stage 3 (Cord Exit Slot)
 The narrow slot where the flexible copper wire leaves the board structure entirely.
 * **Y-Axis Depth:** Extends from `Y = -27mm` out to the absolute perimeter edge of the 50mm board.
-* **X-Axis Width:** 5.0mm. (This narrow pinch ensures the wire passes perfectly *between* two 5.0mm SK6812 LEDs without requiring any LEDs to be removed from the 8-LED circle).
+* **X-Axis Width:** 5.0mm. (This narrow pinch ensures the wire passes perfectly *between* two 5.0mm SK6812 LEDs without requiring any LEDs to be removed from the 11-LED circle).
