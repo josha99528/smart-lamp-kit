@@ -38,9 +38,11 @@
   * Route the 5V VBUS net directly from the USB-C input to the LED array. Step down 5V to 3.3V via the LDO regulator exclusively for the ESP32-C6 module and logic circuitry.
   * Include a 2A or 3A PTC resettable inline fuse on the 5V VBUS intake to prevent fire hazards from short circuits.
   * Place a bulk capacitor (e.g., 470µF or 1000µF) directly on the 5V rail near the LEDs to prevent voltage drops during sudden current spikes.
-* **Thermal Design:** 
-  * Ensure the PCB layout includes a small copper polygon under the 3.3V LDO to act as a heatsink.
-  * Include an NTC Thermistor connected to an ESP32 ADC pin to monitor board temperature.
+* **Thermal Design & Heat Dissipation (Critical):** 
+  * **LED Heat Management:** 11x SK6812 LEDs running at full brightness will generate noticeable heat in a confined 3D printed housing. The top layer must feature a continuous copper pour around the LED ring, tied to the GND plane using arrays of **Thermal Vias**.
+  * **LDO Heat Sink:** The 3.3V LDO regulator drops 5V to 3.3V and will bleed the excess voltage as heat. Ensure the PCB layout includes a dedicated copper polygon on the top and bottom layers under the LDO, stitched together with thermal vias to act as a heatsink.
+  * **Inner Power Planes:** Utilize Layer 2 exclusively as a solid `GND` plane and Layer 3 exclusively as a solid `5V` plane. These solid planes are absolutely mandatory to act as internal heat spreaders across the entire 50mm diameter.
+  * Include an NTC Thermistor connected to an ESP32 ADC pin to monitor board temperature in the firmware.
 * **USB-C Implementation & Protection:** 
   * **Component Selection:** Use the **TE Connectivity 2129691-2** (or equivalent 24-position Hybrid Mid-Mount Receptacle) to achieve the absolute minimum vertical height of ~2.2mm.
   * **Mounting Style (Critical):** The receptacle must be an **Inward-Recessed Mid-Mount**.
